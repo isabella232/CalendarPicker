@@ -141,17 +141,32 @@ export default class CalendarPicker extends Component {
 
     const date = moment({ year: currentYear, month: currentMonth, day });
 
-    if (
-      allowRangeSelection &&
-      selectedStartDate &&
-      date.isSameOrAfter(selectedStartDate) &&
-      !selectedEndDate
-    ) {
-      this.setState({
-        selectedEndDate: date
-      });
-      // propagate to parent date has changed
-      onDateChange(date, Utils.END_DATE);
+    if (allowRangeSelection) {
+      if (selectedStartDate) {
+        if (selectedEndDate && date.isSame(selectedEndDate)) {
+          this.setState({
+            selectedStartDate: date,
+          });
+          onDateChange(selectedStartDate, Utils.START_DATE);
+        }else if (date.isSameOrAfter(selectedStartDate)) {
+          this.setState({
+            selectedEndDate: date,
+          });
+          onDateChange(selectedStartDate, Utils.START_DATE);
+        }else{
+          this.setState({
+            selectedStartDate: date,
+            selectedEndDate: selectedStartDate
+          });
+          onDateChange(date, Utils.START_DATE);
+          onDateChange(selectedStartDate, Utils.END_DATE);
+        }
+      }else{
+        this.setState({
+          selectedStartDate: date,
+        });
+        onDateChange(date, Utils.START_DATE);
+      }
     } else {
       this.setState({
         selectedStartDate: date,
