@@ -152,7 +152,7 @@ export default class CalendarPicker extends Component {
           this.setState({
             selectedEndDate: date,
           });
-          onDateChange(selectedStartDate, Utils.START_DATE);
+          onDateChange(date, Utils.END_DATE);
         }else{
           this.setState({
             selectedStartDate: date,
