@@ -37,7 +37,7 @@ export default function HeaderControls(props) {
       />
       <View>
         <Text style={[styles.monthLabel, textStyle]}>
-           { month } { year }
+           { year }.{ month }
         </Text>
       </View>
       <Controls
